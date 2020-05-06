@@ -6319,7 +6319,7 @@ function installPython(workingDirectory) {
     return __awaiter(this, void 0, void 0, function* () {
         const options = {
             cwd: workingDirectory,
-            silent: true,
+            silent: false,
             listeners: {
                 stdout: (data) => {
                     core.debug(data.toString().trim());
@@ -6330,6 +6330,7 @@ function installPython(workingDirectory) {
             yield exec.exec('powershell', ['./setup.ps1'], options);
         }
         else {
+            yield exec.exec('bash', ['ls -l ./setup.sh'], options);
             yield exec.exec('bash', ['sudo ./setup.sh'], options);
         }
     });
