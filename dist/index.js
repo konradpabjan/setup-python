@@ -6319,7 +6319,7 @@ function installPython(workingDirectory) {
     return __awaiter(this, void 0, void 0, function* () {
         const options = {
             cwd: workingDirectory,
-            silent: false,
+            silent: true,
             listeners: {
                 stdout: (data) => {
                     core.debug(data.toString().trim());
