@@ -6330,8 +6330,8 @@ function installPython(workingDirectory) {
             yield exec.exec('powershell', ['./setup.ps1'], options);
         }
         else {
-            yield exec.exec('sudo bash', ['chmod +x ./setup.sh'], options);
-            yield exec.exec('sudo bash', ['-E ./setup.sh'], options);
+            yield exec.exec('bash', ['chmod +x ./setup.sh'], options);
+            yield exec.exec('bash', ['sudo -E ./setup.sh'], options);
         }
     });
 }
