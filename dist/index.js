@@ -6333,7 +6333,9 @@ function installPython(workingDirectory) {
             yield exec.exec('powershell', ['./setup.ps1'], options);
         }
         else {
-            yield chmod('./setup.sh', '755');
+            const setupFile = path.join(workingDirectory, 'setup.sh');
+            yield chmod(setupFile, '755');
+            console.log('done changing perms');
             yield exec.exec('bash', ['-E ./setup.sh'], options);
         }
     });
