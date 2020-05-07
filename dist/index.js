@@ -6300,6 +6300,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = __importStar(__webpack_require__(622));
+const fs = __importStar(__webpack_require__(747));
+const util = __importStar(__webpack_require__(669));
 const core = __importStar(__webpack_require__(470));
 const tc = __importStar(__webpack_require__(533));
 const exec = __importStar(__webpack_require__(986));
@@ -6308,6 +6310,7 @@ const MANIFEST_REPO_OWNER = 'actions';
 const MANIFEST_REPO_NAME = 'python-versions';
 exports.MANIFEST_URL = `https://raw.githubusercontent.com/${MANIFEST_REPO_OWNER}/${MANIFEST_REPO_NAME}/master/versions-manifest.json`;
 const IS_WINDOWS = process.platform === 'win32';
+const chmod = util.promisify(fs.chmod);
 function findReleaseFromManifest(semanticVersionSpec, architecture) {
     return __awaiter(this, void 0, void 0, function* () {
         const manifest = yield tc.getManifestFromRepo(MANIFEST_REPO_OWNER, MANIFEST_REPO_NAME, AUTH_TOKEN);
@@ -6330,8 +6333,8 @@ function installPython(workingDirectory) {
             yield exec.exec('powershell', ['./setup.ps1'], options);
         }
         else {
-            yield exec.exec('bash', ['chmod +x ./setup.sh'], options);
-            yield exec.exec('bash', ['sudo -E ./setup.sh'], options);
+            yield chmod('./setup.sh', '755');
+            yield exec.exec('bash', ['-E ./setup.sh'], options);
         }
     });
 }
